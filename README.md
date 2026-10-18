@@ -9,6 +9,7 @@ Each session lives in its own folder with its own solution.
 | # | Session | Focus |
 |---|---------|-------|
 | 01 | [Quote of the day](Session01.QuoteOfTheDay/) | Minimal APIs, routing, `Results.Ok` / `NotFound` |
+| 02 | [To-do API](Session02.TodoApi/) | Controllers, CRUD, request models, validation |
 
 ## Running a session
 
