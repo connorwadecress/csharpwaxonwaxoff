@@ -19,6 +19,25 @@ namespace Todo.Api.Controllers
             return Ok(_todos);
         }
 
+        [HttpPost]
+        public IActionResult Create(CreateTodoRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Title))
+            {
+                return BadRequest("Title must not be blank.");
+            }
+
+            var todo = new TodoItem
+            {
+                Id = _todos.Count == 0 ? 1 : _todos.Max(item => item.Id) + 1,
+                Title = request.Title.Trim()
+            };
+
+            _todos.Add(todo);
+
+            return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
+        }
+
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
