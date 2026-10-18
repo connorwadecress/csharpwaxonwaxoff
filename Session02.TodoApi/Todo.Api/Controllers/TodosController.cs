@@ -59,6 +59,20 @@ namespace Todo.Api.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id:int}")]
+        public IActionResult Delete(int id)
+        {
+            var todo = _todos.FirstOrDefault(item => item.Id == id);
+
+            if (todo is null)
+            {
+                return NotFound();
+            }
+
+            _todos.Remove(todo);
+            return NoContent();
+        }
+
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {

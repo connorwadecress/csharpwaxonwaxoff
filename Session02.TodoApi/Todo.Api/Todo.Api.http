@@ -1,3 +1,62 @@
 @baseUrl = http://localhost:5082
 
 ###
+GET {{baseUrl}}/todos
+
+###
+GET {{baseUrl}}/todos/1
+
+###
+POST {{baseUrl}}/todos
+Content-Type: application/json
+
+{
+  "title": "Learn controller actions"
+}
+
+###
+PUT {{baseUrl}}/todos/1
+Content-Type: application/json
+
+{
+  "title": "Buy groceries and milk",
+  "isCompleted": true
+}
+
+### Blank title: expect 400
+POST {{baseUrl}}/todos
+Content-Type: application/json
+
+{
+  "title": "   "
+}
+
+### Blank title: expect 400
+PUT {{baseUrl}}/todos/1
+Content-Type: application/json
+
+{
+  "title": "   ",
+  "isCompleted": false
+}
+
+### Missing ID: expect 404
+GET {{baseUrl}}/todos/2147483647
+
+### Missing ID: expect 404
+PUT {{baseUrl}}/todos/2147483647
+Content-Type: application/json
+
+{
+  "title": "Missing task",
+  "isCompleted": true
+}
+
+### Missing ID: expect 404
+DELETE {{baseUrl}}/todos/2147483647
+
+### Delete existing task: expect 204 on first request
+DELETE {{baseUrl}}/todos/1
+
+### After deletion: expect 404
+GET {{baseUrl}}/todos/1
