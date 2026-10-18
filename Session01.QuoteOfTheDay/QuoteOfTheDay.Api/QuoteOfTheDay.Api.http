@@ -1,3 +1,13 @@
 @baseUrl = http://localhost:5067
 
 ###
+POST {{baseUrl}}/quotes
+Content-Type: application/json
+
+{
+  "text": "My first API-created quote.",
+  "author": "Connor"
+}
+
+###
+GET {{baseUrl}}/quotes

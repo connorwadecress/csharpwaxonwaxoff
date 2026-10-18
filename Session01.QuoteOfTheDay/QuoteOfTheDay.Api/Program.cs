@@ -13,5 +13,22 @@ List<Quote> quotes = new List<Quote>
 };
 
 app.MapGet("/quotes", () => Results.Ok(quotes));
+app.MapGet("/quotes/random", () =>
+{
+    var index = Random.Shared.Next(quotes.Count);
+    var randomQuote = quotes[index];
+    return Results.Ok(randomQuote);
+});
+app.MapPost("/quotes", (CreateQuoteRequest request) =>
+{
+    var newQuote = new Quote
+    {
+        Id = quotes.Max(q => q.Id) + 1,
+        Text = request.Text,
+        Author = request.Author
+    };
+    quotes.Add(newQuote);
+    return Results.Created($"/quotes/{newQuote.Id}", newQuote);
+});
 
 app.Run();
