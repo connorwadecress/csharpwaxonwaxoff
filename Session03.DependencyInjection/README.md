@@ -2,7 +2,7 @@
 
 ## Starting point
 
-This independent .NET 10 solution starts with a copy of the completed Session 02 models and CRUD controller. Storage is still a static list inside the controller. No service or dependency-injection registration has been implemented yet.
+Nothing yet. Once Session 02 is finished, create a new .NET 10 Web API solution in this folder (Todo.Api, port 5083) and copy in your Session 02 models and CRUD controller. Storage starts as the static list inside the controller.
 
 ## Goal
 
@@ -33,11 +33,7 @@ dotnet run --project Session03.DependencyInjection/Todo.Api
 
 Development URL: http://localhost:5083
 
-After refactoring, repeat the HTTP checks while this API is running:
-
-```powershell
-./Session02.TodoApi/Verify-Api.ps1 -BaseUrl http://localhost:5083
-```
+After refactoring, rerun your Session 02 .http requests against port 5083. Every response should match what Session 02 returns.
 
 ## Notes
 
