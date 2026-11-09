@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Todo.Api.Models;
+using Todo.Api.Services;
 
 namespace Todo.Api.Controllers
 {
@@ -7,22 +8,23 @@ namespace Todo.Api.Controllers
     [Route("todos")]
     public class TodosController : ControllerBase
     {
-        private static readonly List<TodoItem> _todos = new List<TodoItem>
+        private readonly ITodoService _todoService;
+        
+        public TodosController(ITodoService todoService)
         {
-            new TodoItem { Id = 1, Title = "Buy groceries"},
-            new TodoItem { Id = 2, Title = "Clean the house"},
-        };
+            _todoService = todoService;
+        }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_todos);
+            return Ok(_todoService.GetAll());
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
-            var todo = _todos.FirstOrDefault(item => item.Id == id);
+            var todo = _todoService.GetById(id);
 
             if (todo is null)
             {
@@ -43,18 +45,18 @@ namespace Todo.Api.Controllers
             var todo = new TodoItem
             {
                 //Id = _todos.Count + 1,
-                Id = _todos.Count == 0 ? 1 : _todos.Max(item => item.Id) + 1,
+                Id = _todoService.GetAll().Count == 0 ? 1 : _todoService.GetAll().Max(item => item.Id) + 1,
                 Title = request.Title
             };
 
-            _todos.Add(todo);
+            _todoService.Add(todo);
             return CreatedAtAction(nameof(GetById), new { id = todo.Id }, todo);
         }
 
         [HttpPut("{id:int}")]
         public IActionResult Update(int id, UpdateToDoRequest request)
         {
-            var existingTodo = _todos.FirstOrDefault(item => item.Id == id);
+            var existingTodo = _todoService.GetById(id);
 
             if (existingTodo is null)
             {
@@ -74,12 +76,12 @@ namespace Todo.Api.Controllers
         [HttpDelete("{id:int}")]
         public IActionResult Delete(int id)
         {
-            var existingTodo = _todos.FirstOrDefault(item => item.Id == id);
+            var existingTodo = _todoService.GetById(id);
             if (existingTodo is null)
             {
                 return NotFound();
             }
-            _todos.Remove(existingTodo);
+            _todoService.Remove(existingTodo);
             return NoContent();
         }
 
