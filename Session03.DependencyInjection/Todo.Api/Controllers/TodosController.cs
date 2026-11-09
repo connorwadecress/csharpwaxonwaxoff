@@ -44,8 +44,6 @@ namespace Todo.Api.Controllers
 
             var todo = new TodoItem
             {
-                //Id = _todos.Count + 1,
-                Id = _todoService.GetAll().Count == 0 ? 1 : _todoService.GetAll().Max(item => item.Id) + 1,
                 Title = request.Title
             };
 

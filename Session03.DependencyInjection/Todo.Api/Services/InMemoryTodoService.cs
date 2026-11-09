@@ -22,6 +22,7 @@ namespace Todo.Api.Services
 
         public void Add(TodoItem todo)
         {
+            todo.Id = GetAll().Count == 0 ? 1 : GetAll().Max(item => item.Id) + 1;
             _todos.Add(todo);
         }
 
