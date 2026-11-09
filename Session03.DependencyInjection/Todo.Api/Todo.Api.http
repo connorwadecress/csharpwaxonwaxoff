@@ -1,0 +1,28 @@
+@baseUrl = http://localhost:5083
+
+### Reject a blank title (expect 400 Bad Request)
+POST {{baseUrl}}/todos
+Content-Type: application/json
+
+{
+  "title": "test"
+}
+
+
+### Update task 1s
+PUT {{baseUrl}}/todos/6
+Content-Type: application/json
+
+{
+  "title": "Buy groceries and milk",
+  "isCompleted": true
+}
+
+### Check the saved task
+GET {{baseUrl}}/todos/6
+
+
+### Delete task 1 — expect 204
+DELETE {{baseUrl}}/todos/1
+
+

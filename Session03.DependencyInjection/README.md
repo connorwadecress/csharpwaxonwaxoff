@@ -2,7 +2,7 @@
 
 ## Starting point
 
-Nothing yet. Once Session 02 is finished, create a new .NET 10 Web API solution in this folder (Todo.Api, port 5083) and copy in your Session 02 models and CRUD controller. Storage starts as the static list inside the controller.
+Open Session03.DependencyInjection.slnx in Visual Studio. The .NET 10 Todo.Api project uses port 5083 and starts with a copy of your completed Session 02 models, CRUD controller, and HTTP requests. Storage is still the static list inside the controller. The Services folder is ready for you to add your own interface and implementation; no custom service or DI registration has been written yet.
 
 ## Goal
 
