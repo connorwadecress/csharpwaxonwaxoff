@@ -11,6 +11,7 @@ Each session lives in its own folder with its own solution.
 | 01 | [Quote of the day](Session01.QuoteOfTheDay/) | Minimal APIs, routing, `Results.Ok` / `NotFound` |
 | 02 | [To-do API](Session02.TodoApi/) | Controllers, CRUD, request models, validation |
 | 03 | [Dependency injection](Session03.DependencyInjection/) | Interfaces, services, constructor injection, lifetimes |
+| 04 | [Unit converter](Session04.UnitConverter/) | Query strings vs route values, enums, `switch` expressions, 400s |
 
 ## Running a session
 
