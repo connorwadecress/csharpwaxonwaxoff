@@ -12,6 +12,7 @@ Each session lives in its own folder with its own solution.
 | 02 | [To-do API](Session02.TodoApi/) | Controllers, CRUD, request models, validation |
 | 03 | [Dependency injection](Session03.DependencyInjection/) | Interfaces, services, constructor injection, lifetimes |
 | 04 | [Unit converter](Session04.UnitConverter/) | Query strings vs route values, enums, `switch` expressions, 400s |
+| 05 | [Library](Session05.Library/) | EF Core, SQL Server, `DbContext`, migrations, connection strings |
 
 ## Running a session
 
