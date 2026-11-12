@@ -10,7 +10,7 @@ Content-Type: application/json
 
 
 ### Update task 1s
-PUT {{baseUrl}}/todos/6
+POST {{baseUrl}}/todos/
 Content-Type: application/json
 
 {
@@ -25,4 +25,7 @@ GET {{baseUrl}}/todos/6
 ### Delete task 1 — expect 204
 DELETE {{baseUrl}}/todos/1
 
+
+### Get 
+GET {{baseUrl}}/todos/
 

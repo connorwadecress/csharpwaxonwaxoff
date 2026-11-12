@@ -16,4 +16,4 @@ GET {{baseUrl}}/quotes/random
 GET {{baseUrl}}/quotes
 
 ### Get By Id
-GET {{baseUrl}}/quotes/6
+GET {{baseUrl}}/quotes/11
