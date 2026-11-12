@@ -3,6 +3,5 @@
     public class CreateToDoItemRequest
     {
         public required string Title { get; set; }
-
     }
 }

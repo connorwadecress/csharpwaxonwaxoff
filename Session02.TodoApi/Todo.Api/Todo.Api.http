@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5082
 
-### Reject a blank title (expect 400 Bad Request)
+### Add todo
 POST {{baseUrl}}/todos
 Content-Type: application/json
 
@@ -9,8 +9,8 @@ Content-Type: application/json
 }
 
 
-### Update task 1s
-PUT {{baseUrl}}/todos/6
+### update 
+PUT {{baseUrl}}/todos/3
 Content-Type: application/json
 
 {
@@ -18,10 +18,19 @@ Content-Type: application/json
   "isCompleted": true
 }
 
-### Check the saved task
+### CompleteToggle
+PATCH {{baseUrl}}/todos/2/completeToggle
+
+
+### get by id
 GET {{baseUrl}}/todos/6
 
 
-### Delete task 1 — expect 204
+### delete by id
 DELETE {{baseUrl}}/todos/1
 
+### get all
+GET {{baseUrl}}/todos
+
+### get all completed
+GET {{baseUrl}}/todos/completed

@@ -19,6 +19,33 @@ namespace Todo.Api.Controllers
             return Ok(_todos);
         }
 
+        [HttpGet("completed")]
+        public IActionResult GetCompleted()
+        {
+            var completedTodos = _todos.Where(item => item.IsCompleted).ToList();
+            return Ok(completedTodos);
+        }
+
+        [HttpPatch("{id:int}/completeToggle")]
+        public IActionResult CompleteToggle(int id)
+        {
+            var todo = _todos.FirstOrDefault(item => item.Id == id);
+
+            if (todo is null)
+            {
+                return NotFound();
+            }
+
+            //if (todo.IsCompleted)
+            //    todo.IsCompleted = false;
+            //else 
+            //    todo.IsCompleted = true;
+
+            todo.IsCompleted = !todo.IsCompleted;
+
+            return Ok(todo);
+        }
+
         [HttpGet("{id:int}")]
         public IActionResult GetById(int id)
         {
