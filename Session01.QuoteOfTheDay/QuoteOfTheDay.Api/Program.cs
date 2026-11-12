@@ -12,13 +12,29 @@ List<Quote> quotes = new List<Quote>
     new Quote { Id = 5, Text = "The only limit to our realization of tomorrow will be our doubts of today.", Author = "Franklin D. Roosevelt" }
 };
 
+//GetAll
 app.MapGet("/quotes", () => Results.Ok(quotes));
+
+//Get Random
 app.MapGet("/quotes/random", () =>
 {
     var index = Random.Shared.Next(quotes.Count);
     var randomQuote = quotes[index];
     return Results.Ok(randomQuote);
 });
+
+//Get by Id
+app.MapGet("/quotes/{id:int}", (int id) =>
+{
+    var quote = quotes.FirstOrDefault(q => q.Id == id);
+    if (quote is null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(quote);
+});
+
+//Post Quote
 app.MapPost("/quotes", (CreateQuoteRequest request) =>
 {
     var newQuote = new Quote

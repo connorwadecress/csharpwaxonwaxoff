@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5067
 
-###
+### Post Quote
 POST {{baseUrl}}/quotes
 Content-Type: application/json
 
@@ -9,5 +9,11 @@ Content-Type: application/json
   "author": "Connor"
 }
 
-###
+### Random
+GET {{baseUrl}}/quotes/random
+
+### Get All
 GET {{baseUrl}}/quotes
+
+### Get By Id
+GET {{baseUrl}}/quotes/6
