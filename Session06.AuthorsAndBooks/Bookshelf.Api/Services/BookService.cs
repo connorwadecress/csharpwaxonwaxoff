@@ -52,16 +52,18 @@ namespace Bookshelf.Api.Services
                 return null;
             }
 
-            var books = await _dbContext.Books.Where(b => b.AuthorId == id).ToListAsync();
-            return books.Select(b => new BookResponse
-            {
-                Id = b.Id,
-                Title = b.Title,
-                ISBN = b.ISBN,
-                PublishedYear = b.PublishedYear,
-                AuthorId = b.AuthorId,
-                AuthorName = b.Author.Name
-            });
+            return await _dbContext.Books
+                .Where(b => b.AuthorId == id)
+                .Select(b => new BookResponse
+                {
+                    Id = b.Id,
+                    Title = b.Title,
+                    ISBN = b.ISBN,
+                    PublishedYear = b.PublishedYear,
+                    AuthorId = b.AuthorId,
+                    AuthorName = b.Author.Name
+                })
+                .ToListAsync();
         }
 
         public async Task<BookResponse> CreateBookAsync(CreateBookRequest request)
@@ -75,7 +77,7 @@ namespace Bookshelf.Api.Services
             };
             _dbContext.Books.Add(book);
             await _dbContext.SaveChangesAsync();
-            return await GetBookByIdAsync(book.Id)!;
+            return (await GetBookByIdAsync(book.Id))!;
         }
 
         public async Task<BookResponse?> UpdateBookAsync(int id, UpdateBookRequest request)

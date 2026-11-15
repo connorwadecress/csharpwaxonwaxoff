@@ -16,12 +16,14 @@ namespace Bookshelf.Api.Services
 
         public async Task<IEnumerable<AuthorResponse>> GetAuthorsAsync()
         {
-            return (await _dbContext.Authors.ToListAsync()).Select(author => new AuthorResponse
-            {
-                Id = author.Id,
-                Name = author.Name,
-                BookCount = author.Books.Count
-            });
+            return await _dbContext.Authors
+                .Select(author => new AuthorResponse
+                {
+                    Id = author.Id,
+                    Name = author.Name,
+                    BookCount = author.Books.Count
+                })
+                .ToListAsync();
         }
 
         public async Task<AuthorResponse?> GetAuthorByIdAsync(int id) => (await _dbContext.Authors
