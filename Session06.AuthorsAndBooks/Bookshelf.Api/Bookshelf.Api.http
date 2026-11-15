@@ -1,0 +1,140 @@
+@baseUrl = http://localhost:5086
+
+# Run these from top to bottom. The ids assume a fresh database
+# (the first author is 1 and the first book is 1). If yours differ,
+# change the two variables below.
+@authorId = 1
+@bookId = 1
+
+### ---------- AUTHORS ----------
+
+### Create an author. Expect 201 Created plus a Location header
+POST {{baseUrl}}/api/author
+Content-Type: application/json
+
+{
+  "name": "Terry Pratchett"
+}
+
+### Create a second author (used later to move a book). Expect 201
+POST {{baseUrl}}/api/author
+Content-Type: application/json
+
+{
+  "name": "Neil Gaiman"
+}
+
+### Get all authors. Expect 200
+GET {{baseUrl}}/api/author
+
+### Get one author. Expect 200
+GET {{baseUrl}}/api/author/{{authorId}}
+
+### Update an author. Expect 200 with the new name
+PUT {{baseUrl}}/api/author/{{authorId}}
+Content-Type: application/json
+
+{
+  "name": "Sir Terry Pratchett"
+}
+
+### ---------- BOOKS ----------
+
+### Create a book for author 1. Expect 201
+POST {{baseUrl}}/api/book
+Content-Type: application/json
+
+{
+  "title": "Guards! Guards!",
+  "authorId": {{authorId}},
+  "isbn": "9780552134637",
+  "publishedYear": 1989
+}
+
+### Create a second book for author 1. Expect 201
+POST {{baseUrl}}/api/book
+Content-Type: application/json
+
+{
+  "title": "Mort",
+  "authorId": {{authorId}},
+  "isbn": "9780552131063",
+  "publishedYear": 1987
+}
+
+### Get all books. Expect 200 (look at "author": is it null?)
+GET {{baseUrl}}/api/book
+
+### Get one book. Expect 200
+GET {{baseUrl}}/api/book/{{bookId}}
+
+### Get an author's books. Expect 200 with two books
+GET {{baseUrl}}/api/author/{{authorId}}/books
+
+### Update a book and move it to author 2. Expect 200
+PUT {{baseUrl}}/api/book/{{bookId}}
+Content-Type: application/json
+
+{
+  "title": "Guards! Guards! (revised)",
+  "authorId": 2,
+  "isbn": "9780552134637",
+  "publishedYear": 1989
+}
+
+### ---------- FAILURE CASES ----------
+
+### Book with an author that doesn't exist. Expect 400
+POST {{baseUrl}}/api/book
+Content-Type: application/json
+
+{
+  "title": "Ghost Book",
+  "authorId": 999,
+  "isbn": "0000000000",
+  "publishedYear": 2000
+}
+
+### Book missing a required field (no title). Expect 400 from [ApiController]
+POST {{baseUrl}}/api/book
+Content-Type: application/json
+
+{
+  "authorId": {{authorId}},
+  "isbn": "0000000000",
+  "publishedYear": 2000
+}
+
+### Book that doesn't exist. Expect 404
+GET {{baseUrl}}/api/book/999
+
+### Non-numeric id. Expect 404 (the {id:int} route doesn't match)
+GET {{baseUrl}}/api/book/abc
+
+### Books for an author that doesn't exist. Expect 404
+GET {{baseUrl}}/api/author/999/books
+
+### Update a book that doesn't exist. Expect 404
+PUT {{baseUrl}}/api/book/999
+Content-Type: application/json
+
+{
+  "title": "Nothing",
+  "authorId": {{authorId}},
+  "isbn": "0000000000",
+  "publishedYear": 2000
+}
+
+### ---------- DELETES (run last) ----------
+
+### Delete a book. Expect 204
+DELETE {{baseUrl}}/api/book/{{bookId}}
+
+### Delete the same book again. Expect 404
+DELETE {{baseUrl}}/api/book/{{bookId}}
+
+### Delete author 1, who still has "Mort". Expect 204. CASCADE: Mort is deleted too
+DELETE {{baseUrl}}/api/author/{{authorId}}
+
+### Prove the cascade: Mort should be gone
+GET {{baseUrl}}/api/book

@@ -13,6 +13,7 @@ Each session lives in its own folder with its own solution.
 | 03 | [Dependency injection](Session03.DependencyInjection/) | Interfaces, services, constructor injection, lifetimes |
 | 04 | [Unit converter](Session04.UnitConverter/) | Query strings vs route values, enums, `switch` expressions, 400s |
 | 05 | [Library](Session05.Library/) | EF Core, SQL Server, `DbContext`, migrations, connection strings |
+| 06 | [Authors and books](Session06.AuthorsAndBooks/) | One-to-many relationships, foreign keys, `Include`, response DTOs |
 
 ## Running a session
 
