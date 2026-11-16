@@ -9,14 +9,12 @@
 ### ---------- TEAMS ----------
 
 ### Create a team. Expect 201 Created plus a Location header
-# "players" is sent as an empty list because CreateTeamRequest marks it required
 POST {{baseUrl}}/api/team
 Content-Type: application/json
 
 {
   "name": "Kaizer Chiefs",
-  "city": "Johannesburg",
-  "players": []
+  "city": "Johannesburg"
 }
 
 ### Create a second team (used later for the transfer). Expect 201
@@ -25,8 +23,7 @@ Content-Type: application/json
 
 {
   "name": "Cape Town City",
-  "city": "Cape Town",
-  "players": []
+  "city": "Cape Town"
 }
 
 ### Get all teams. Expect 200 with two teams
@@ -41,8 +38,7 @@ Content-Type: application/json
 
 {
   "name": "Kaizer Chiefs",
-  "city": "Soweto",
-  "players": []
+  "city": "Soweto"
 }
 
 ### ---------- PLAYERS ----------
@@ -78,7 +74,7 @@ GET {{baseUrl}}/api/player/{{playerId}}
 ### Get team 1's players. Expect 200 with two players
 GET {{baseUrl}}/api/player/team/{{teamId}}
 
-### Get team 2's players. Expect 404 (your controller returns 404 when the list is empty)
+### Get team 2's players. Expect 200 with an empty list []
 GET {{baseUrl}}/api/player/team/{{otherTeamId}}
 
 ### Transfer player 1 to team 2. Expect 200 with teamId 2
@@ -126,8 +122,7 @@ POST {{baseUrl}}/api/team
 Content-Type: application/json
 
 {
-  "name": "No City FC",
-  "players": []
+  "name": "No City FC"
 }
 
 ### Team that doesn't exist. Expect 404
@@ -156,8 +151,7 @@ Content-Type: application/json
 
 {
   "name": "Nobody FC",
-  "city": "Nowhere",
-  "players": []
+  "city": "Nowhere"
 }
 
 ### ---------- DELETES (run last) ----------

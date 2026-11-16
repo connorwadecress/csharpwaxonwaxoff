@@ -9,12 +9,10 @@ namespace League.Api.Services
     public class PlayerService : IPlayerService
     {
         private readonly AppDbContext _dbContext;
-        private readonly TeamService _teamService;
 
-        public PlayerService(AppDbContext dbContext, TeamService teamService)
+        public PlayerService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _teamService = teamService;
         }
 
         public async Task<IEnumerable<PlayerResponse>> GetAllPlayersAsync() =>
@@ -46,7 +44,7 @@ namespace League.Api.Services
 
         public async Task<IEnumerable<PlayerResponse>?> GetPlayersByTeamIdAsync(int teamId)
         {
-            if (!await _teamService.TeamExistsAsync(teamId))
+            if (!await _dbContext.Teams.AnyAsync(t => t.Id == teamId))
             {
                 return null;
             }

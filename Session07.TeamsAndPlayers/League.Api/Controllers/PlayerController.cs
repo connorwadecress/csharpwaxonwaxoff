@@ -39,7 +39,7 @@ namespace League.Api.Controllers
         public async Task<IActionResult> GetPlayersByTeamId(int teamId)
         {
             var players = await _playerService.GetPlayersByTeamIdAsync(teamId);
-            if (players == null || !players.Any())
+            if (players == null)
             {
                 return NotFound();
             }
@@ -49,17 +49,27 @@ namespace League.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePlayer([FromBody] CreatePlayerRequest createPlayerRequest)
         {
+            if (!await _teamService.TeamExistsAsync(createPlayerRequest.TeamId))
+            {
+                return BadRequest($"Team {createPlayerRequest.TeamId} does not exist.");
+            }
+
             var player = await _playerService.CreatePlayerAsync(createPlayerRequest);
             if (player == null)
             {
                 return BadRequest("Failed to create player.");
             }
-            return CreatedAtAction(nameof(GetPlayerById), new { teamId = player.TeamId }, player);
+            return CreatedAtAction(nameof(GetPlayerById), new { id = player.Id }, player);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePlayer(int id, [FromBody] UpdatePlayerRequest updatePlayerRequest)
         {
+            if (!await _teamService.TeamExistsAsync(updatePlayerRequest.TeamId))
+            {
+                return BadRequest($"Team {updatePlayerRequest.TeamId} does not exist.");
+            }
+
             var player = await _playerService.UpdatePlayerAsync(id, updatePlayerRequest);
             if (player == null)
             {

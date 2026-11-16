@@ -9,12 +9,10 @@ namespace League.Api.Services
     public class TeamService : ITeamService
     {   
         private readonly AppDbContext _dbContext;
-        private readonly PlayerService _playerService;
 
-        public TeamService(AppDbContext dbContext, PlayerService playerService)
+        public TeamService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _playerService = playerService;
         }
 
         public async Task<IEnumerable<TeamResponse>> GetAllTeamsAsync() =>
