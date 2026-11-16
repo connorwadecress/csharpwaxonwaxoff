@@ -1,0 +1,177 @@
+@baseUrl = http://localhost:5087
+
+# Run these from top to bottom. The ids assume a fresh database
+# (first team is 1, first player is 1). If yours differ, change these.
+@teamId = 1
+@otherTeamId = 2
+@playerId = 1
+
+### ---------- TEAMS ----------
+
+### Create a team. Expect 201 Created plus a Location header
+# "players" is sent as an empty list because CreateTeamRequest marks it required
+POST {{baseUrl}}/api/team
+Content-Type: application/json
+
+{
+  "name": "Kaizer Chiefs",
+  "city": "Johannesburg",
+  "players": []
+}
+
+### Create a second team (used later for the transfer). Expect 201
+POST {{baseUrl}}/api/team
+Content-Type: application/json
+
+{
+  "name": "Cape Town City",
+  "city": "Cape Town",
+  "players": []
+}
+
+### Get all teams. Expect 200 with two teams
+GET {{baseUrl}}/api/team
+
+### Get one team. Expect 200
+GET {{baseUrl}}/api/team/{{teamId}}
+
+### Update a team. Expect 200 with the new city
+PUT {{baseUrl}}/api/team/{{teamId}}
+Content-Type: application/json
+
+{
+  "name": "Kaizer Chiefs",
+  "city": "Soweto",
+  "players": []
+}
+
+### ---------- PLAYERS ----------
+
+### Create a player for team 1. Expect 201
+POST {{baseUrl}}/api/player
+Content-Type: application/json
+
+{
+  "name": "Itumeleng Khune",
+  "shirtNumber": 32,
+  "position": "Goalkeeper",
+  "teamId": {{teamId}}
+}
+
+### Create a second player for team 1. Expect 201
+POST {{baseUrl}}/api/player
+Content-Type: application/json
+
+{
+  "name": "Keagan Dolly",
+  "shirtNumber": 10,
+  "position": "Midfielder",
+  "teamId": {{teamId}}
+}
+
+### Get all players. Expect 200 with two players
+GET {{baseUrl}}/api/player
+
+### Get one player. Expect 200
+GET {{baseUrl}}/api/player/{{playerId}}
+
+### Get team 1's players. Expect 200 with two players
+GET {{baseUrl}}/api/player/team/{{teamId}}
+
+### Get team 2's players. Expect 404 (your controller returns 404 when the list is empty)
+GET {{baseUrl}}/api/player/team/{{otherTeamId}}
+
+### Transfer player 1 to team 2. Expect 200 with teamId 2
+PUT {{baseUrl}}/api/player/{{playerId}}
+Content-Type: application/json
+
+{
+  "name": "Itumeleng Khune",
+  "shirtNumber": 1,
+  "position": "Goalkeeper",
+  "teamId": {{otherTeamId}}
+}
+
+### Prove the transfer: team 2 now has one player. Expect 200
+GET {{baseUrl}}/api/player/team/{{otherTeamId}}
+
+### Prove the transfer: team 1 now has one player. Expect 200
+GET {{baseUrl}}/api/player/team/{{teamId}}
+
+### ---------- FAILURE CASES ----------
+
+### Player with a team that doesn't exist. Expect 400 (not a 500 from SQL Server)
+POST {{baseUrl}}/api/player
+Content-Type: application/json
+
+{
+  "name": "Ghost Player",
+  "shirtNumber": 99,
+  "position": "Striker",
+  "teamId": 999
+}
+
+### Player missing a required field (no name). Expect 400 from [ApiController]
+POST {{baseUrl}}/api/player
+Content-Type: application/json
+
+{
+  "shirtNumber": 7,
+  "position": "Winger",
+  "teamId": {{teamId}}
+}
+
+### Team missing a required field (no city). Expect 400
+POST {{baseUrl}}/api/team
+Content-Type: application/json
+
+{
+  "name": "No City FC",
+  "players": []
+}
+
+### Team that doesn't exist. Expect 404
+GET {{baseUrl}}/api/team/999
+
+### Player that doesn't exist. Expect 404
+GET {{baseUrl}}/api/player/999
+
+### Players for a team that doesn't exist. Expect 404
+GET {{baseUrl}}/api/player/team/999
+
+### Update a player that doesn't exist. Expect 404
+PUT {{baseUrl}}/api/player/999
+Content-Type: application/json
+
+{
+  "name": "Nobody",
+  "shirtNumber": 5,
+  "position": "Defender",
+  "teamId": {{teamId}}
+}
+
+### Update a team that doesn't exist. Expect 404
+PUT {{baseUrl}}/api/team/999
+Content-Type: application/json
+
+{
+  "name": "Nobody FC",
+  "city": "Nowhere",
+  "players": []
+}
+
+### ---------- DELETES (run last) ----------
+
+### Delete a player. Expect 204
+DELETE {{baseUrl}}/api/player/{{playerId}}
+
+### Delete the same player again. Expect 404
+DELETE {{baseUrl}}/api/player/{{playerId}}
+
+### Delete team 1, which still has Keagan Dolly.
+# Default (cascade): 204 and his row is deleted too.
+# If you switched to DeleteBehavior.Restrict: expect 409 Conflict.
+DELETE {{baseUrl}}/api/team/{{teamId}}
+
+### Check what happened to Keagan Dolly
+GET {{baseUrl}}/api/player
