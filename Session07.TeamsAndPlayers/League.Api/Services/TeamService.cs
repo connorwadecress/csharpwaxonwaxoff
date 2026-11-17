@@ -36,7 +36,7 @@ namespace League.Api.Services
                 })
                 .FirstOrDefaultAsync();
 
-        public async Task<TeamResponse> CreateTeamAsync(CreateTeamRequest createTeamRequest)
+        public async Task<TeamResponse?> CreateTeamAsync(CreateTeamRequest createTeamRequest)
         {
             var team = new Team
             {

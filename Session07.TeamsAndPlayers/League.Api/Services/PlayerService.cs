@@ -73,7 +73,14 @@ namespace League.Api.Services
             };
             _dbContext.Players.Add(player);
             await _dbContext.SaveChangesAsync();
-            return await GetPlayerByIdAsync(player.Id);
+            return new PlayerResponse
+            {
+                Id = player.Id,
+                Name = player.Name,
+                ShirtNumber = player.ShirtNumber,
+                Position = player.Position,
+                TeamId = player.TeamId
+            };
         }
            
         public async Task<PlayerResponse?> UpdatePlayerAsync(int id, UpdatePlayerRequest updatePlayerRequest)
