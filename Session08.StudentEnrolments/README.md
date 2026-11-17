@@ -22,7 +22,7 @@ A student can do many courses and a course has many students. The link is an `En
 Course:
 - [x] `Course` entity (Id, Code, Title, Credits)
 - [x] `CreateCourseRequest`, `UpdateCourseRequest`, `CourseResponse`
-- [ ] `ICourseRepository` + `CourseRepository`
+- [x] `ICourseRepository` + `CourseRepository`
 - [ ] `ICourseService` + `CourseService`
 - [ ] register them in both `DependencyInjection.cs` files
 - [ ] `CourseController` CRUD

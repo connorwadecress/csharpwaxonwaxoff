@@ -14,7 +14,7 @@ namespace Enrolments.Infrastructure
                 options.UseSqlServer(connectionString));
 
             services.AddScoped<IStudentRepository, StudentRepository>();
-            // TODO services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
             // TODO services.AddScoped<IEnrolmentRepository, EnrolmentRepository>();
 
             return services;
