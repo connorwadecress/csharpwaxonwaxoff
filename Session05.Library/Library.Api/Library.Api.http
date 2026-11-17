@@ -1,3 +1,32 @@
 @baseUrl = http://localhost:5085
 
-###
+### Get books
+GET {{baseUrl}}/api/book
+
+### Get book
+GET {{baseUrl}}/api/book/1
+
+### Create book
+POST {{baseUrl}}/api/book
+Content-Type: application/json
+
+{
+  "title": "Mort",
+  "author": "Terry Pratchett",
+  "isbn": "9780552131063",
+  "publishedYear": 1987
+}
+
+### Update book
+PUT {{baseUrl}}/api/book/1
+Content-Type: application/json
+
+{
+  "title": "Mort (revised)",
+  "author": "Terry Pratchett",
+  "isbn": "9780552131063",
+  "publishedYear": 1987
+}
+
+### Delete book
+DELETE {{baseUrl}}/api/book/1
