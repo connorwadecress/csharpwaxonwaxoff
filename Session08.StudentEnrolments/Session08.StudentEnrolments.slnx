@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Enrolments.Api/Enrolments.Api.csproj" />
+  <Project Path="Enrolments.Application/Enrolments.Application.csproj" />
+  <Project Path="Enrolments.Domain/Enrolments.Domain.csproj" />
+  <Project Path="Enrolments.Infrastructure/Enrolments.Infrastructure.csproj" />
+</Solution>

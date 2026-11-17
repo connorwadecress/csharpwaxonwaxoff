@@ -1,0 +1,44 @@
+@baseUrl = http://localhost:5088
+
+### Get students
+GET {{baseUrl}}/api/student
+
+### Get student
+GET {{baseUrl}}/api/student/1
+
+### Create student
+POST {{baseUrl}}/api/student
+Content-Type: application/json
+
+{
+  "firstName": "Thandi",
+  "lastName": "Nkosi",
+  "email": "thandi@example.com"
+}
+
+### Update student
+PUT {{baseUrl}}/api/student/1
+Content-Type: application/json
+
+{
+  "firstName": "Thandi",
+  "lastName": "Nkosi-Dlamini",
+  "email": "thandi@example.com"
+}
+
+### Delete student
+DELETE {{baseUrl}}/api/student/1
+
+### TODO courses CRUD
+
+### TODO enrol student 1 on course 1
+# POST {{baseUrl}}/api/student/1/courses/1
+
+### TODO get student 1's courses
+# GET {{baseUrl}}/api/student/1/courses
+
+### TODO get course 1's students
+# GET {{baseUrl}}/api/course/1/students
+
+### TODO unenrol student 1 from course 1
+# DELETE {{baseUrl}}/api/student/1/courses/1

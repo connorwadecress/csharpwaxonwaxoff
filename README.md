@@ -15,6 +15,7 @@ Each session lives in its own folder with its own solution.
 | 05 | [Library](Session05.Library/) | EF Core, SQL Server, `DbContext`, migrations, connection strings |
 | 06 | [Authors and books](Session06.AuthorsAndBooks/) | One-to-many relationships, foreign keys, `Include`, response DTOs |
 | 07 | [Teams and players](Session07.TeamsAndPlayers/) | One-to-many again, from memory and at speed |
+| 08 | [Student enrolments](Session08.StudentEnrolments/) | Many-to-many with a join entity, composite keys, four-project clean architecture |
 
 ## Running a session
 
